@@ -15,9 +15,14 @@ class User:
         conn = sqlite3.connect(DB_PATH)
         cur = conn.cursor()
         cur.execute('''
-                    INSERT OR REPLACE INTO user (tg_id, name, surname, username)
+                    INSERT INTO user (tg_id, name, surname, username)
                     VALUES (?, ?, ?, ?)
-                    ''', (self.tg_id, self.first_name, self.last_name, self.username))
+                    ON CONFLICT (tg_id) DO UPDATE
+                    SET name = ?,
+                        surname = ?,
+                        username = ?
+                    ''', (self.tg_id, self.first_name, self.last_name, self.username,
+                          self.first_name, self.last_name, self.username))
         conn.commit()
         conn.close()
         
