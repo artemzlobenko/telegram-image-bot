@@ -13,7 +13,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await user.set_user()
     await context.bot.send_message(
         chat_id = update.effective_chat.id,
-        text = "Hello, I'm a bot! Press images to get 10 images."
+        text = 'Hello, I\'m a bot! Press Images to get 10 images.'
     )
     
 
