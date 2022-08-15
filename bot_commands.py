@@ -21,8 +21,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     buttons = [[KeyboardButton(GET_IMAGES_TEXT)]]
     await add_user(update)
     await context.bot.send_message(
-        chat_id = update.effective_chat.id,
-        text = 'Hello, I\'m need_for_picture bot! ' +
+        chat_id=update.effective_chat.id,
+        text='Hello, I\'m need_for_picture bot! ' +
             'Press press Get images to get 10 images.',
         reply_markup=ReplyKeyboardMarkup(buttons, resize_keyboard=True)
     )
@@ -37,16 +37,16 @@ async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
         images = await Image.get_unwatched_images(user.id)
         media_photos = [InputMediaPhoto(media=image.url) for image in images]
         await context.bot.sendMediaGroup(
-            chat_id = update.effective_chat.id,
-            media = media_photos
+            chat_id=update.effective_chat.id,
+            media=media_photos
         )
         
         await Image.update_watched_images(user.id, images)
     except BadRequest as e:
         print(e)
         await context.bot.send_message(
-            chat_id = update.effective_chat.id,
-            text = 'There is no more content left :(' + '\n' +
+            chat_id=update.effective_chat.id,
+            text='There is no more content left :(' + '\n' +
                 'But i\'ts okay, we add new beautiful pictures every week!' + '\n' +
                 'Have a nice day!'
         )
