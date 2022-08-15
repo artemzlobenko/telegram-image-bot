@@ -1,5 +1,4 @@
 from telegram.ext import ApplicationBuilder, CommandHandler
-import asyncio
 
 from image import Image
 from bot_commands import start, images
