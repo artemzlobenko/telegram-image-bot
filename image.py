@@ -72,15 +72,3 @@ class Image:
                     ''', (url, theme))
         conn.commit()
         conn.close()
-
-    @classmethod
-    async def get_image(cls, image_id: int):
-        conn = sqlite3.connect(DB_PATH)
-        cur = conn.cursor()
-        image_dict = cur.execute('''
-                    SELECT *
-                    FROM image
-                    WHERE id=?
-                    ''', image_id).fetchall()
-        conn.close()
-        return Image(*image_dict)
