@@ -1,9 +1,12 @@
-from telegram import InputMediaPhoto, Update
+from telegram import InputMediaPhoto, KeyboardButton, ReplyKeyboardMarkup, Update
 from telegram.error import BadRequest
 from telegram.ext import ContextTypes
 
 from image import Image
 from user import User
+
+
+GET_IMAGES_TEXT = 'Get images 🎋'
 
 
 async def add_user(update: Update):
@@ -15,10 +18,13 @@ async def add_user(update: Update):
     )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    buttons = [[KeyboardButton(GET_IMAGES_TEXT)]]
     await add_user(update)
     await context.bot.send_message(
         chat_id = update.effective_chat.id,
-        text = 'Hello, I\'m a bot! Press /images to get 10 images.'
+        text = 'Hello, I\'m need_for_picture bot! ' +
+            'Press press Get images to get 10 images.',
+        reply_markup=ReplyKeyboardMarkup(buttons, resize_keyboard=True)
     )
 
 async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -26,6 +32,7 @@ async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not user:
         await add_user(update)
         user = await User.get_user(update.effective_user.id)
+        
     try:
         images = await Image.get_unwatched_images(user.id)
         media_photos = [InputMediaPhoto(media=image.url) for image in images]
@@ -40,6 +47,6 @@ async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(
             chat_id = update.effective_chat.id,
             text = 'There is no more content left :(' + '\n' +
-                'But don\'t be upset, we add new beautiful images every week!' + '\n' +
+                'But i\'ts okay, we add new beautiful pictures every week!' + '\n' +
                 'Have a nice day!'
         )
