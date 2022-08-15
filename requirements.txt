@@ -1,0 +1,21 @@
+anyio==3.6.1
+APScheduler==3.9.1
+cachetools==5.2.0
+certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
+charset-normalizer==2.1.0
+decorator==5.1.1
+h11==0.12.0
+httpcore==0.15.0
+httpx==0.23.0
+idna==3.3
+python-telegram-bot==20.0a2
+pytz==2022.1
+pytz-deprecation-shim==0.1.0.post0
+rfc3986==1.5.0
+six==1.16.0
+sniffio==1.2.0
+tornado==6.2
+tzdata==2022.1
+tzlocal==4.2
+validators==0.20.0
+wincertstore==0.2
