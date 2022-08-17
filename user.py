@@ -1,7 +1,7 @@
-import sqlite3
+import psycopg2
 from dataclasses import dataclass
 
-from config import DB_PATH
+from config import DB_PASSWORD, DB_URI, DB_USER
 
 
 @dataclass
@@ -14,13 +14,15 @@ class User:
 
     @classmethod
     async def get_user(cls, tg_id: int):
-        conn = sqlite3.connect(DB_PATH)
+        conn = psycopg2.connect(dbname=DB_URI, user=DB_USER,
+                                password=DB_PASSWORD)
         cur = conn.cursor()
-        user_tuple = cur.execute('''
+        cur.execute('''
                     SELECT *
                     FROM user
                     WHERE tg_id = ?
-                    ''', (tg_id,)).fetchone()
+                    ''', (tg_id,))
+        user_tuple = cur.fetchone()
         conn.close()
         return User(*user_tuple) if user_tuple else None
     
@@ -28,7 +30,8 @@ class User:
     async def set_user(cls, tg_id: int, first_name: str, 
                        last_name: str, username: str) -> None:
         
-        conn = sqlite3.connect(DB_PATH)
+        conn = psycopg2.connect(dbname=DB_URI, user=DB_USER,
+                                password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''
                     INSERT INTO user (tg_id, name, surname, username)
