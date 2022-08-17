@@ -1,3 +1,5 @@
+import logging
+
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler
 from telegram.ext.filters import Text
 
@@ -11,9 +13,9 @@ def main():
     Image.update_images(CSV_PATH)
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
-    images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
+    #images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
     application.add_handler(start_handler)
-    application.add_handler(images_handler)
+    #application.add_handler(images_handler)
     application.run_polling()
 
 
