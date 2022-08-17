@@ -20,7 +20,8 @@ def main():
     #application.add_handler(images_handler)
     application.run_webhook(
         port=PORT,
-        url_path=APP_URL
+        url_path=BOT_TOKEN,
+        webhook_url=APP_URL
     )
 
 
