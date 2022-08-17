@@ -18,12 +18,12 @@ def main():
     #images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
     application.add_handler(start_handler)
     #application.add_handler(images_handler)
-    application.run_webhook(
-        listen='0.0.0.0',
-        port=PORT,
-        url_path=BOT_TOKEN,
-        webhook_url=APP_URL
-    )
+    application.updater.start_webhook(listen="0.0.0.0",
+                       port=PORT,
+                       url_path=BOT_TOKEN)
+    application.updater.bot.setWebhook("https://telegram-img-bot.herokuapp.com/" + BOT_TOKEN)
+
+
 
 
 if __name__ == '__main__':
