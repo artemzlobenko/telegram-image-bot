@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from validators import url
 
-from config import DB_PATH
+from config import DB_URI
 
 
 @dataclass
@@ -18,7 +18,7 @@ class Image:
     
     @classmethod
     async def get_unwatched_images(cls, user_id: int, number_of_images: int = 10) -> list:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_URI)
         cur = conn.cursor()
         image_list = cur.execute('''
                     SELECT *
@@ -36,7 +36,7 @@ class Image:
     
     @classmethod
     async def update_watched_images(cls, tg_id: int, images: list) -> None:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_URI)
         cur = conn.cursor()
         for image in images:
             cur.execute('''
@@ -63,7 +63,7 @@ class Image:
 
     @classmethod
     def set_image(cls, url, theme) -> None:
-        conn = sqlite3.connect(DB_PATH)
+        conn = sqlite3.connect(DB_URI)
         cur = conn.cursor()
         cur.execute('''
                     INSERT INTO image (url, theme)
