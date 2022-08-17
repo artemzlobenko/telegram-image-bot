@@ -34,7 +34,7 @@ class User:
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''
-                    INSERT INTO users (tg_id, name, surname, username)
+                    INSERT INTO users (tg_id, first_name, last_name, username)
                     VALUES (?, ?, ?, ?)
                     ON CONFLICT (tg_id) DO UPDATE
                     SET name = ?,
