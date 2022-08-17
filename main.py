@@ -11,16 +11,16 @@ from config import BOT_TOKEN, CSV_PATH
 def main():
     # Enable logging
     logging.basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.DEBUG
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
     )
     logger = logging.getLogger(__name__)
     
-    #Image.update_images(CSV_PATH)
+    Image.update_images(CSV_PATH)
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
-    #images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
+    images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
     application.add_handler(start_handler)
-    #application.add_handler(images_handler)
+    application.add_handler(images_handler)
     application.run_polling()
 
 

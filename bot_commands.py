@@ -12,14 +12,26 @@ GET_IMAGES_TEXT = 'Get images 🎋'
 async def add_user(update: Update):
     await User.set_user(
         update.effective_user.id,
+        first_name=update.effective_user.first_name,
+        last_name=update.effective_user.last_name,
+        username=update.effective_user.username
+    )
+
+async def update_user(update: Update):
+    await User.update_user(
         update.effective_user.first_name,
         update.effective_user.last_name,
         update.effective_user.username,
+        update.effective_user.id
     )
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
     buttons = [[KeyboardButton(GET_IMAGES_TEXT)]]
-    await add_user(update)
+    
+    if not await User.get_user(update.effective_user.id):
+        await add_user(update)
+    
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='Hello, I\'m need_for_picture bot! ' +
@@ -28,10 +40,13 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    
     user = await User.get_user(update.effective_user.id)
     if not user:
         await add_user(update)
         user = await User.get_user(update.effective_user.id)
+    else:
+        await update_user(update)
         
     try:
         images = await Image.get_unwatched_images(user.id)
@@ -42,6 +57,7 @@ async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         
         await Image.update_watched_images(user.id, images)
+        
     except BadRequest as e:
         print(e)
         await context.bot.send_message(
