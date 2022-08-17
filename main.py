@@ -11,7 +11,7 @@ from config import BOT_TOKEN, CSV_PATH, APP_URL
 
 
 def main():
-    PORT = int(os.environ.get('PORT', '5000'))
+    PORT = int(os.environ.get('PORT', '8443'))
     Image.update_images(CSV_PATH)
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
@@ -19,6 +19,7 @@ def main():
     application.add_handler(start_handler)
     #application.add_handler(images_handler)
     application.run_webhook(
+        listen='0.0.0.0',
         port=PORT,
         url_path=BOT_TOKEN,
         webhook_url=APP_URL
