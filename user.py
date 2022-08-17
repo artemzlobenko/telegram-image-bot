@@ -19,7 +19,7 @@ class User:
         cur = conn.cursor()
         cur.execute('''
                     SELECT *
-                    FROM user
+                    FROM users
                     WHERE tg_id = ?
                     ''', (tg_id,))
         user_tuple = cur.fetchone()
@@ -34,7 +34,7 @@ class User:
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''
-                    INSERT INTO user (tg_id, name, surname, username)
+                    INSERT INTO users (tg_id, name, surname, username)
                     VALUES (?, ?, ?, ?)
                     ON CONFLICT (tg_id) DO UPDATE
                     SET name = ?,
