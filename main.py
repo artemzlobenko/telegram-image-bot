@@ -1,5 +1,3 @@
-import logging
-
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler
 from telegram.ext.filters import Text
 
