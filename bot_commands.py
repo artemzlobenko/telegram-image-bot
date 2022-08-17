@@ -19,7 +19,7 @@ async def add_user(update: Update):
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     buttons = [[KeyboardButton(GET_IMAGES_TEXT)]]
-    #await add_user(update)
+    await add_user(update)
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='Hello, I\'m need_for_picture bot! ' +
