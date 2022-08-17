@@ -1,3 +1,4 @@
+import logging
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler
 from telegram.ext.filters import Text
 
@@ -8,7 +9,13 @@ from config import BOT_TOKEN, CSV_PATH
 
 
 def main():
-    Image.update_images(CSV_PATH)
+    # Enable logging
+    logging.basicConfig(
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.DEBUG
+    )
+    logger = logging.getLogger(__name__)
+    
+    #Image.update_images(CSV_PATH)
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
     #images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
