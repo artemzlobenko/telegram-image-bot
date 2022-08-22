@@ -35,7 +35,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(
         chat_id=update.effective_chat.id,
         text='Hello, I\'m need_for_picture bot! ' +
-            'Press press Get images to get 10 images.',
+            'Press Get images 🎋 to get 10 images.',
         reply_markup=ReplyKeyboardMarkup(buttons, resize_keyboard=True)
     )
 
@@ -63,6 +63,6 @@ async def images(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
             text='There is no more content left :(' + '\n' +
-                'But i\'ts okay, we add new beautiful pictures every week!' + '\n' +
+                'But i\'ts okay, we add new pictures every week!' + '\n' +
                 'Have a nice day!'
         )
