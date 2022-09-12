@@ -47,7 +47,7 @@ class User:
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''
-                    SELECT first_name, COUNT(*)
+                    SELECT first_name, COUNT(*) as watched_images
                     FROM users
                     JOIN watched_images ON watched_images.user_id = users.id
                     GROUP by first_name
