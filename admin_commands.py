@@ -19,7 +19,7 @@ async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 
             await context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text=stat_message,
+                text='test',
             )
         else:
             await context.bot.send_message(
