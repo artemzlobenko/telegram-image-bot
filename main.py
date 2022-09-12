@@ -16,7 +16,6 @@ def main():
         level=logging.INFO
     )
     
-    Image.update_images(CSV_PATH)
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
     images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
