@@ -25,7 +25,7 @@ class User:
         user_tuple = cur.fetchone()
         conn.close()
         return User(*user_tuple) if user_tuple else None
-    
+
     @classmethod
     async def set_user(cls, tg_id: int, first_name: str, 
                        last_name: str, username: str) -> None:
@@ -40,7 +40,7 @@ class User:
                     ''', (tg_id, first_name, last_name, username))
         conn.commit()
         conn.close()
-        
+
     @classmethod
     async def get_stat(cls) -> tuple:
         conn = psycopg2.connect(DB_URI, dbname=DB_NAME, user=DB_USER,
@@ -50,7 +50,7 @@ class User:
                     SELECT first_name, COUNT(*)
                     FROM users
                     JOIN watched_images ON watched_images.user_id = users.id
-                    GROUP by first_name;
+                    GROUP by first_name
                     ''')
         user_info_tuple = cur.fetchall()
         conn.close()
@@ -71,5 +71,3 @@ class User:
                     ''', (first_name, last_name, username, tg_id))
         conn.commit()
         conn.close()
-
-    
