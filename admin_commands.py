@@ -16,7 +16,7 @@ async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
             stat_message = ''
                 
             await context.bot.send_message(
-                chat_id=type(stat) + '   ' + type[stat[0]] + type[stat[0][0]],
+                chat_id=type(stat) + '   ' + type(stat[0]) + type(stat[0][0]),
                 text=stat_message,
             )
         else:
