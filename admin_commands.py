@@ -11,7 +11,7 @@ from config import ADMIN_TG_ID
 
 async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if str(update.effective_user.id) == str(ADMIN_TG_ID):
-        stat = None
+        stat = User.get_stat()
         if stat:
             stat_message = ''
             for user in stat:
@@ -24,5 +24,5 @@ async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='There are no users',
+                text='There are no users.',
             )
