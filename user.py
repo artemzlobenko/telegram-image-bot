@@ -52,7 +52,7 @@ class User:
                     JOIN watched_images ON watched_images.user_id = users.id
                     GROUP by first_name
                     ''')
-        user_info_tuple = cur.fetchone()
+        user_info_tuple = cur.fetchall()
         conn.close()
         return user_info_tuple
 
