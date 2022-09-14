@@ -14,11 +14,11 @@ async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
         stat = await User.get_stat()
         if stat:
             stat_message = ''
-            for user in stat:
-                stat_message += ' | '.join(user) + '\n'
+            for data in stat:
+                stat_message += ' | '.join(data) + '\n'
                 
             await context.bot.send_message(
-                chat_id=update.effective_chat.id,
+                chat_id=type(stat) + '   ' + type[stat[0]] + type[stat[0][0]],
                 text=stat_message,
             )
         else:
