@@ -1,11 +1,9 @@
-from optparse import AmbiguousOptionError
-from re import A
-from telegram import InputMediaPhoto, KeyboardButton, ReplyKeyboardMarkup, Update
-from telegram.error import BadRequest
+from telegram import Update
 from telegram.ext import ContextTypes
+from telegram import b
 
-from image import Image
 from user import User
+from image import Image
 from config import ADMIN_TG_ID
 
 
@@ -26,3 +24,9 @@ async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 chat_id=update.effective_chat.id,
                 text='There are no users.',
             )
+
+async def add_images(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if str(update.effective_user.id) == str(ADMIN_TG_ID):
+        file_id = update.effective_message.document.file_id
+        csv_file = await context.bot.get_file(file_id)
+        await Image.update_images(csv_file)

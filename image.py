@@ -50,18 +50,16 @@ class Image:
         conn.close()
 
     @classmethod
-    def update_images(cls, csv_path) -> None:
+    async def update_images(cls, csv_file) -> None:
         """
-        Insert themes and URLs of images from CSV files into the database.
+        Insert themes and URLs of images from CSV file into the database.
         """
-        file_path_iter = glob.iglob(os.path.join(csv_path, '*.csv'))
-        for file_path in file_path_iter:
-            with open(file_path) as url_file:
-                url_reader = csv.reader(url_file)
-                for image_url in url_reader:
-                    if url(image_url[0]) and not Image.get_image(image_url[0]):
-                        theme = Path(file_path).stem
-                        Image.set_image(image_url[0], theme)
+        with open(csv_file) as url_file:
+            url_reader = csv.reader(url_file)
+            for image_url in url_reader:
+                if url(image_url[0]) and not Image.get_image(image_url[0]):
+                    theme = Path(csv_file).stem
+                    Image.set_image(image_url[0], theme)
 
     @classmethod
     def set_image(cls, url, theme) -> None:
