@@ -1,8 +1,7 @@
-import csv 
-import glob
+import csv
 import psycopg2
-import os
 from pathlib import Path
+from urllib.request import urlopen
 from dataclasses import dataclass
 
 from validators import url
@@ -50,15 +49,15 @@ class Image:
         conn.close()
 
     @classmethod
-    async def update_images(cls, csv_file) -> None:
+    async def update_images(cls, csv_url) -> None:
         """
         Insert themes and URLs of images from CSV file into the database.
         """
-        with open(csv_file) as url_file:
+        with urlopen(csv_url) as url_file:
             url_reader = csv.reader(url_file)
             for image_url in url_reader:
                 if url(image_url[0]) and not Image.get_image(image_url[0]):
-                    theme = Path(csv_file).stem
+                    theme = Path(csv_url).stem
                     Image.set_image(image_url[0], theme)
 
     @classmethod
