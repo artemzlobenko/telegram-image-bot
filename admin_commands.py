@@ -27,8 +27,10 @@ async def stat(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def add_images(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if str(update.effective_user.id) == str(ADMIN_TG_ID):
         file_id = update.effective_message.document.file_id
-        csv_file = await context.bot.get_file(file_id)
-        await Image.update_images(csv_file)
+        csv_url = await context.bot.get_file(file_id)
+        csv_url.download()
+        csv_path = csv_url.file_path
+        await Image.update_images(csv_path)
         await context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text='New images have been added to database.',
