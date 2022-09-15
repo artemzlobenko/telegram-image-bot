@@ -1,6 +1,5 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from telegram import b
 
 from user import User
 from image import Image
