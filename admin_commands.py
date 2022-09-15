@@ -29,3 +29,7 @@ async def add_images(update: Update, context: ContextTypes.DEFAULT_TYPE):
         file_id = update.effective_message.document.file_id
         csv_file = await context.bot.get_file(file_id)
         await Image.update_images(csv_file)
+        await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text='New images have been added to database.',
+            )
