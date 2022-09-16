@@ -32,9 +32,10 @@ async def add_images(update: Update, context: ContextTypes.DEFAULT_TYPE):
         csv_file.download()
         
         csv_bytestream = csv_file.file_path
-        image_theme = update.effective_message.document.file_name[:-4]
+        file_name = update.effective_message.document.file_name
+        image_theme = file_name.replace('.csv', '')
         await Image.update_images(csv_bytestream, image_theme)
         await context.bot.send_message(
                 chat_id=update.effective_chat.id,
-                text='New images have been added to database.',
+                text='New images have been added to the database.',
             )

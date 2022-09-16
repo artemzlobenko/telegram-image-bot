@@ -52,12 +52,12 @@ class Image:
         """
         Insert themes and URLs of images from CSV file into the database.
         """
-        csv_file = urlopen(csv_bytesteam).read().decode('utf-8').split('\n')
+        csv_file = urlopen(csv_bytesteam).read().decode('utf-8').split('\r\n')
         del csv_file[-1]
         for image_url in csv_file:
-            if url(image_url[:-1]) and not Image.get_image(image_url[:-1]):
+            if url(image_url) and not Image.get_image(image_url[:-1]):
                 theme = image_theme
-                Image.set_image(image_url[:-1], theme)
+                Image.set_image(image_url, theme)
 
     @classmethod
     def set_image(cls, url, theme) -> None:
