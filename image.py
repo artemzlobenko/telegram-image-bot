@@ -3,7 +3,6 @@ import psycopg2
 from pathlib import Path
 from urllib.request import urlopen
 from dataclasses import dataclass
-
 from validators import url
 
 from config import DB_NAME, DB_PASSWORD, DB_URI, DB_USER
@@ -53,12 +52,12 @@ class Image:
         """
         Insert themes and URLs of images from CSV file into the database.
         """
-        with urlopen(csv_bytesteam.read().decode('utf-8')) as url_file:
-            url_reader = csv.reader(url_file)
-            for image_url in url_reader:
-                if url(image_url[0]) and not Image.get_image(image_url[0]):
-                    theme = image_theme
-                    Image.set_image(image_url[0], theme)
+        csv_file = urlopen(csv_bytesteam).read().decode('utf-8').split('\n')
+        del csv_file[-1]
+        for image_url in csv_file:
+            if url(image_url[:-1]) and not Image.get_image(image_url[:-1]):
+                theme = image_theme
+                Image.set_image(image_url[:-1], theme)
 
     @classmethod
     def set_image(cls, url, theme) -> None:
