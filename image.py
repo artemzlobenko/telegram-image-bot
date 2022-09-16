@@ -49,15 +49,15 @@ class Image:
         conn.close()
 
     @classmethod
-    async def update_images(cls, csv_url) -> None:
+    async def update_images(cls, csv_bytesteam, image_theme) -> None:
         """
         Insert themes and URLs of images from CSV file into the database.
         """
-        with urlopen(csv_url) as url_file:
+        with urlopen(csv_bytesteam.read().decode('utf-8')) as url_file:
             url_reader = csv.reader(url_file)
             for image_url in url_reader:
                 if url(image_url[0]) and not Image.get_image(image_url[0]):
-                    theme = Path(csv_url).stem
+                    theme = image_theme
                     Image.set_image(image_url[0], theme)
 
     @classmethod
