@@ -1,6 +1,4 @@
-import csv
-import psycopg2
-from pathlib import Path
+from mysql import connector
 from urllib.request import urlopen
 from dataclasses import dataclass
 from validators import url
@@ -13,10 +11,10 @@ class Image:
     id: int
     url: str
     theme: str
-    
+
     @classmethod
     async def get_unwatched_images(cls, user_id: int, number_of_images: int = 10) -> list:
-        conn = psycopg2.connect(DB_URI, dbname=DB_NAME, user=DB_USER,
+        conn = connector.connect(host=DB_URI, database=DB_NAME, user=DB_USER,
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''
@@ -32,18 +30,20 @@ class Image:
         image_list = cur.fetchall()
         conn.close()
         images = [Image(*image_dict) for image_dict in image_list]
+        for image in images:
+            print(image)
         return images
-    
+
     @classmethod
-    async def update_watched_images(cls, tg_id: int, images: list) -> None:
-        conn = psycopg2.connect(DB_URI, dbname=DB_NAME, user=DB_USER,
+    async def update_watched_images(cls, user_id: int, images: list) -> None:
+        conn = connector.connect(host=DB_URI, database=DB_NAME, user=DB_USER,
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         for image in images:
             cur.execute('''
                         INSERT INTO watched_images (user_id, image_id)
                         VALUES (%s, %s)
-                        ''', (tg_id, image.id))
+                        ''', (user_id, image.id))
             conn.commit()
         conn.close()
 
@@ -61,20 +61,20 @@ class Image:
 
     @classmethod
     def set_image(cls, url, theme) -> None:
-        conn = psycopg2.connect(DB_URI, dbname=DB_NAME, user=DB_USER,
+        conn = connector.connect(host=DB_URI, database=DB_NAME, user=DB_USER,
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''
                     INSERT INTO images (url, theme)
                     VALUES (%s, %s)
-                    ON CONFLICT (url) DO NOTHING
+                    ON DUPLICATE KEY UPDATE url=url
                     ''', (url, theme))
         conn.commit()
         conn.close()
 
     @classmethod
     def get_image(cls, url) -> None:
-        conn = psycopg2.connect(DB_URI, dbname=DB_NAME, user=DB_USER,
+        conn = connector.connect(host=DB_URI, database=DB_NAME, user=DB_USER,
                                 password=DB_PASSWORD)
         cur = conn.cursor()
         cur.execute('''

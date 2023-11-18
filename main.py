@@ -5,7 +5,7 @@ from telegram.ext.filters import Document, Text
 from bot_commands import start, images
 from admin_commands import stat, add_images
 from bot_commands import GET_IMAGES_TEXT
-from config import BOT_TOKEN, CSV_PATH
+from config import BOT_TOKEN
 
 
 def main():
@@ -13,7 +13,7 @@ def main():
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         level=logging.DEBUG
     )
-    
+
     application = ApplicationBuilder().token(BOT_TOKEN).build()
     start_handler = CommandHandler('start', start)
     images_handler = MessageHandler(Text(GET_IMAGES_TEXT), images)
